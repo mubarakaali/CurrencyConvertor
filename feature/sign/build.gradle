@@ -3,8 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlinx-serialization'
-    id 'dagger.hilt.android.plugin'
-    id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-parcelize'
 
 }
@@ -30,36 +28,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion "1.2.0"
+        kotlinCompilerVersion "1.7.0"
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
     implementation project(':framework')
-    implementation project(':core:domain')
-
-
-    // Feature module Support
-//  implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
-
-//    implementation "androidx.core:core-ktx:$core_version"
-//    implementation "androidx.appcompat:appcompat:$appcompat_version"
-//    implementation "com.google.android.material:material:$material_version"
-//    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-
-//    kapt "com.github.bumptech.glide:compiler:$glide_version"
-
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-//    implementation 'androidx.appcompat:appcompat:1.5.1'
-//    implementation 'com.google.android.material:material:1.4.0'
-//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

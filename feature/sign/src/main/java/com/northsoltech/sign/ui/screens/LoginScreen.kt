@@ -24,21 +24,45 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.CustomButton
 import com.northsoltech.framework.components.MainTitleText
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.navigation.SignDestinations
 import com.northsoltech.sign.ui.signin.LoginViewModel
+
+@Composable
+fun LoginRoutes(
+    navController: NavHostController,
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    LoginScreen(
+        loginViewModel = loginViewModel,
+        onUserAuthentcated = {
+
+        },
+        onUserAuthentcateFailed = {
+
+        },
+        onUserSignupListener = {
+            navController.navigate(
+                route = SignDestinations.UserType.route
+            )
+        }
+    )
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel,
-    onUserAuthentcated:()->Unit,
-    onUserAuthentcateFailed:(error:String)->Unit,
-    onUserSignupListener:()->Unit
+    onUserAuthentcated: () -> Unit,
+    onUserAuthentcateFailed: (error: String) -> Unit,
+    onUserSignupListener: () -> Unit,
 ) {
 
     val uiState by remember { loginViewModel.uiState }
@@ -65,7 +89,7 @@ fun LoginScreen(
             modifier = Modifier
                 .height(Dimension.xlIcon)
                 .width(Dimension.xlIcon),
-            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap) ,
+            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap),
             contentDescription = "app_icon")
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         MediumTitleText(title = stringResource(com.northsoltech.framework.R.string.appname))
@@ -75,7 +99,7 @@ fun LoginScreen(
             textStyle = TextStyle(
                 color = MaterialTheme.colors.secondary
             ),
-            label = {Text(text = stringResource(id = R.string.phone_number))},
+            label = { Text(text = stringResource(id = R.string.phone_number)) },
             onValueChange = { phoneNo = it },
             leadingIcon = {
                 Icon(imageVector = Icons.Filled.Person,

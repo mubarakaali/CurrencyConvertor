@@ -1,50 +1,25 @@
 buildscript {
     ext {
-        compileSdk = 32
+        compileSdk = 33
         minSdk = 23
         targetSdk = 32
 
-        compose_version = '1.1.1'
-        compose_activity_version = '1.4.0'
-        compose_view_model_version = '2.4.1'
-        compose_theme_version = '1.1.5'
-        landscapist_glide_version = '1.5.0'
-        constraint_layout_version = "2.1.4"
-        coroutine_version = '1.6.2'
-        core_version = '1.7.0'
-        lifecycle_version = '2.3.1'
-        glide_version = '4.13.2'
-        activity_version = '1.3.1'
-        kotlin_version = '1.6.10'
-        coroutine_version = '1.6.2'
-        appcompat_version = '1.4.2'
-        fragment_version = '1.4.1'
-        nav_version = '2.4.2'
-        datastore_version = '1.0.0'
-        hilt_version = '2.42'
-        retrofit_version = '2.9.0'
-        http_interceptor_version = '4.9.3'
-        serialization_version = '1.3.2'
-        serializationConverterVersion = '0.8.0'
+        compose_version = '1.2.1'
+        hilt_plugin_version = '2.43.2'
+        kotlin_version = '1.7.0'
     }
     dependencies {
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
-
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 plugins {
     id 'com.android.application' version '7.2.2' apply false
     id 'com.android.library' version '7.2.2' apply false
-    id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
-    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version" apply false
-    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version" apply false
-    id 'androidx.navigation.safeargs.kotlin' version "$nav_version" apply false
-}
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-    }
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+    id 'com.android.test' version '7.2.2' apply false
 }
 
 task clean(type: Delete) {

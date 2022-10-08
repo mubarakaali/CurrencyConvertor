@@ -1,29 +1,67 @@
 package com.northsoltech.bikeagb.ui.screens
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.northsoltech.bikeagb.R
+import com.northsoltech.bikeagb.ui.SplashViewModel
 import com.northsoltech.framework.components.MainTitleText
-import com.northsoltech.framework.ui.theming.Dimension
+import com.northsoltech.sign.ui.navigation.SIGN_GRAPH_ROUTE
 
 @Preview
 @Composable
 fun PreviewSplashScreen(){
 //    BikeaGbTheme {
-        SplashScreen()
+//        SplashScreen()
 //    }
 }
 
 @Composable
-fun SplashScreen() {
+fun SplashRoutes(
+    navHostController: NavHostController,
+    splashVieModel: SplashViewModel = hiltViewModel(),
+//    splashVieModel: SplashViewModel = hiltViewModel(),
+){
+//    val timeOut =  remember { splashVieModel.isTimeOut.value }
+//    if(timeOut){
+//        navHostController.navigate(SignScreen.Login.route)
+//    }
+
+    SplashScreen(
+        splashVieModel = splashVieModel,
+        navHostController = navHostController)
+}
+
+@Composable
+fun SplashScreen(
+       splashVieModel: SplashViewModel,
+        navHostController: NavHostController,
+) {
+        val timeOut =  remember { splashVieModel.isTimeOut}
+
+    Log.d("jejeje", "SplashScreen timeOut: ${timeOut.value} ")
+
+    if(timeOut.value){
+        Log.d("jejeje", "SplashScreen INSIDE: TRUE ")
+        timeOut.value = false
+        navHostController.navigate(route = SIGN_GRAPH_ROUTE){
+            popUpTo(navHostController.graph.findStartDestination().id){
+                inclusive = true
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -7,10 +7,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.SimCard
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -27,12 +24,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.CustomButton
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
 import com.northsoltech.framework.ui.theming.BikeTheme
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.navigation.SignDestinations
 import com.northsoltech.sign.ui.signup.SignupViewModel
 
 @Preview
@@ -47,6 +47,26 @@ fun PreviewSignupScreen() {
 
             })
     }
+}
+
+@Composable
+fun SignupRoutes(navController: NavHostController) {
+
+    SignupScreen(
+        onUserAuthentcated = {
+            navController.navigate(
+                SignDestinations.Signup.route,
+            ){
+                popUpTo(SignDestinations.Signup.route){
+                    inclusive = true
+                }
+
+
+            }
+        },
+        onUserAuthentcateFailed = {
+
+        })
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -83,7 +103,7 @@ fun SignupScreen(
             modifier = Modifier
                 .height(Dimension.xlIcon)
                 .width(Dimension.xlIcon),
-            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap) ,
+            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap),
             contentDescription = "app_icon")
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         MediumTitleText(title = stringResource(R.string.registration))
@@ -141,7 +161,7 @@ fun SignupScreen(
             onValueChange = { cnicNumber = it },
             label = { Text(text = stringResource(id = R.string.cnic)) },
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.SimCard,
+                Icon(imageVector = Icons.Filled.ShoppingCart,
                     contentDescription = "call")
             },
             keyboardOptions = KeyboardOptions(
@@ -205,14 +225,15 @@ fun SignupScreen(
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
-                signupViewModel?.onSignUp(
-                    name = name,
-                    phoneNo = phoneNumber,
-                    cnicNumber = cnicNumber,
-                    password = userPassword,
-                    onUserAuthenticated = onUserAuthentcated,
-                    onUserAuthenticateFailed = onUserAuthentcateFailed
-                )
+                onUserAuthentcated.invoke()
+//                signupViewModel?.onSignUp(
+//                    name = name,
+//                    phoneNo = phoneNumber,
+//                    cnicNumber = cnicNumber,
+//                    password = userPassword,
+//                    onUserAuthenticated = onUserAuthentcated,
+//                    onUserAuthenticateFailed = onUserAuthentcateFailed
+//                )
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {

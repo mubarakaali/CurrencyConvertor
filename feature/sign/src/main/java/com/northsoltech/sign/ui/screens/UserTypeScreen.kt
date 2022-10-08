@@ -13,12 +13,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.CustomButton
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.ui.theming.BikeTheme
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.framework.utils.enums.UserType
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.navigation.SignDestinations
 
 @Preview
 @Composable
@@ -29,6 +31,16 @@ fun PreviewUserScreen() {
 //        })
     }
 
+}
+
+@Composable
+fun UserTypeRoutes(
+    navHostController: NavHostController
+) {
+
+    UserTypeScreen(onButtonClicked = {
+        navHostController.navigate(SignDestinations.Signup.route)
+    })
 }
 
 @Composable

@@ -1,23 +1,8 @@
 pluginManagement {
-//    resolutionStrategy {
-//        def redirectModule = [
-//                'androidx.navigation.safeargs.kotlin': 'androidx.navigation:navigation-safe-args-gradle-plugin',
-//        ]
-//
-//        eachPlugin {
-//            if (redirectModule.containsKey(requested.id.id)) {
-//                println "${requested.id.id} --> ${redirectModule.getOrDefault(requested.id.id, requested.id.id)}"
-//                useModule("${redirectModule.get(requested.id.id)}:${requested.version}")
-//            }
-//        }
-//    }
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven {
-            url "https://www.jitpack.io"
-        }
     }
 }
 dependencyResolutionManagement {
@@ -27,12 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "FindDriver"
+rootProject.name = "ComposeNavigationSample"
 include ':app'
-include ':core'
-include ':core:data'
-include ':core:network'
-include ':core:domain'
 include ':framework'
 include ':feature'
 include ':feature:sign'
