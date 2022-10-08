@@ -6,13 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.northsoltech.bikeagb.ui.screens.SplashRoutes
 
-//object MainDestination:AppNavigationDestination {
-//    override val route: String
-//        get() = "splash_route"
-//    override val destination: String
-//        get() = "splash_destination"
-//}
-
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
 ){
