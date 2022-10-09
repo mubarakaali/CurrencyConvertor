@@ -32,6 +32,7 @@ import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.navigation.HOME_GRAPH_ROUTE
 import com.northsoltech.sign.ui.navigation.SignDestinations
 import com.northsoltech.sign.ui.signin.LoginViewModel
 
@@ -43,7 +44,9 @@ fun LoginRoutes(
     LoginScreen(
         loginViewModel = loginViewModel,
         onUserAuthentcated = {
-
+           navController.navigate(
+               route = HOME_GRAPH_ROUTE
+           )
         },
         onUserAuthentcateFailed = {
 
@@ -169,12 +172,13 @@ fun LoginScreen(
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
-                loginViewModel.userLogin(
-                    phoneNo = phoneNo,
-                    password = userPassword,
-                    onUserAuthentcated = onUserAuthentcated,
-                    onUserAuthentcateFailed = onUserAuthentcateFailed
-                )
+                onUserAuthentcated.invoke()
+//                loginViewModel.userLogin(
+//                    phoneNo = phoneNo,
+//                    password = userPassword,
+//                    onUserAuthentcated = onUserAuthentcated,
+//                    onUserAuthentcateFailed = onUserAuthentcateFailed
+//                )
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {

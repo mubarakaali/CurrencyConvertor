@@ -11,7 +11,7 @@ fun NavGraphBuilder.mainNavGraph(
 ){
   navigation(
       startDestination = AppDestinations.Splash.route,
-      route = HOME_GRAPH_ROUTE
+      route = MAIN_GRAPH_ROUTE
   ){
       composable(
           route = AppDestinations.Splash.route

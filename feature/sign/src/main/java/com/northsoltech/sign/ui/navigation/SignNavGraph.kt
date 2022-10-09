@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.northsoltech.sign.ui.screens.*
 
 const val SIGN_GRAPH_ROUTE = "sign_routes"
+internal const val HOME_GRAPH_ROUTE = "home_routes"
 fun NavGraphBuilder.signNavGraph(
     navController: NavHostController
 ) {

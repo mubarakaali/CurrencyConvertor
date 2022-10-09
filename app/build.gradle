@@ -52,6 +52,7 @@ android {
 dependencies {
     implementation(project(':framework'))
     implementation(project(':feature:sign'))
+    implementation(project(':feature:home'))
 
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
