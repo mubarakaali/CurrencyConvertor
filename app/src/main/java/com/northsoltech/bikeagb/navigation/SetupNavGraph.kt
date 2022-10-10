@@ -13,7 +13,7 @@ fun SetupNavGraph(
     NavHost(
         navController = navController,
         startDestination = MAIN_GRAPH_ROUTE,
-        route = ROOT_GRAPH_ROUTE
+        route = NAV_GRAPH_ROUTE
     ) {
         mainNavGraph(navController = navController)
         signNavGraph(navController = navController)
