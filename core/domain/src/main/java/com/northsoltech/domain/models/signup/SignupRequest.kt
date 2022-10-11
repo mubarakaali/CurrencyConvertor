@@ -1,8 +1,10 @@
 package com.northsoltech.domain.models.signup
 
+/**
+ * usertype rider = 1
+ * usertype customer = 2
+ */
 
-//1 for rider
-//2 for user
 data class SignupRequest(
     var name: String,
     var phoneNo: String,
