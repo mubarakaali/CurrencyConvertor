@@ -7,18 +7,18 @@ import com.northsoltech.domain.models.transform
 import com.northsoltech.domain.remote.SigningDataSource
 import com.northsoltech.network.ApiServices
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SigningDataSourceImp @Inject constructor(
-    private val apiServices: ApiServices
+     val apiServices: ApiServices
 
 ): BaseRemoteDataSource(), SigningDataSource {
 
     override fun signing(phoneNo: String, password: String): Flow<ApiResource<LoginData>> = safeApiCall {
         Log.d("jejeje", "signing: SigningDataSourceImp phoneNo.... $phoneNo  password $password")
         apiServices.signing(phoneNo, password)
-
     }.map { it->
         it.transform {
             it.toDomain()

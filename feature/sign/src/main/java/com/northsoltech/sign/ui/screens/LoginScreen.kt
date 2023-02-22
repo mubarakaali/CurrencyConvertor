@@ -39,16 +39,15 @@ import com.northsoltech.sign.ui.signin.LoginViewModel
 @Composable
 fun LoginRoutes(
     navController: NavHostController,
-    loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     LoginScreen(
-        loginViewModel = loginViewModel,
         onUserAuthentcated = {
-           navController.navigate(
-               route = HOME_GRAPH_ROUTE
-           )
+            navController.navigate(
+                route = HOME_GRAPH_ROUTE
+            )
         },
         onUserAuthentcateFailed = {
+            navController.navigate(route = HOME_GRAPH_ROUTE)
 
         },
         onUserSignupListener = {
@@ -62,9 +61,9 @@ fun LoginRoutes(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel,
+    loginViewModel: LoginViewModel = hiltViewModel(),
     onUserAuthentcated: () -> Unit,
-    onUserAuthentcateFailed: (error: String) -> Unit,
+    onUserAuthentcateFailed: (errorMessage: String) -> Unit,
     onUserSignupListener: () -> Unit,
 ) {
 
@@ -93,7 +92,8 @@ fun LoginScreen(
                 .height(Dimension.xlIcon)
                 .width(Dimension.xlIcon),
             painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap),
-            contentDescription = "app_icon")
+            contentDescription = "app_icon"
+        )
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         MediumTitleText(title = stringResource(com.northsoltech.framework.R.string.appname))
         Spacer(modifier = Modifier.height(Dimension.pagePadding.times(2)))
@@ -105,8 +105,10 @@ fun LoginScreen(
             label = { Text(text = stringResource(id = R.string.phone_number)) },
             onValueChange = { phoneNo = it },
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.Person,
-                    contentDescription = "phoneNo")
+                Icon(
+                    imageVector = Icons.Filled.Person,
+                    contentDescription = "phoneNo"
+                )
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -126,8 +128,10 @@ fun LoginScreen(
                 color = MaterialTheme.colors.secondary
             ),
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.Lock,
-                    contentDescription = "lock")
+                Icon(
+                    imageVector = Icons.Filled.Lock,
+                    contentDescription = "lock"
+                )
             },
             onValueChange = { userPassword = it },
             label = { Text(text = "Password") },
@@ -147,8 +151,10 @@ fun LoginScreen(
                 IconButton(onClick = {
                     isVisible = !isVisible
                 }) {
-                    Icon(painter = icon,
-                        contentDescription = "view password")
+                    Icon(
+                        painter = icon,
+                        contentDescription = "view password"
+                    )
                 }
             },
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -158,8 +164,10 @@ fun LoginScreen(
         CustomButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = Dimension.pagePadding.times(2),
-                    end = Dimension.pagePadding.times(2))
+                .padding(
+                    start = Dimension.pagePadding.times(2),
+                    end = Dimension.pagePadding.times(2)
+                )
                 .shadow(
                     elevation = if (uiState !is UiState.Loading) Dimension.elevation else Dimension.zero,
                     shape = MaterialTheme.shapes.large,
@@ -172,13 +180,12 @@ fun LoginScreen(
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
-                onUserAuthentcated.invoke()
-//                loginViewModel.userLogin(
-//                    phoneNo = phoneNo,
-//                    password = userPassword,
-//                    onUserAuthentcated = onUserAuthentcated,
-//                    onUserAuthentcateFailed = onUserAuthentcateFailed
-//                )
+                loginViewModel.userLogin(
+                    phoneNo = phoneNo,
+                    password = userPassword,
+                    onUserAuthentcated = onUserAuthentcated,
+                    onUserAuthentcateFailed = onUserAuthentcateFailed
+                )
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {
@@ -196,10 +203,14 @@ fun LoginScreen(
         CustomButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = Dimension.pagePadding.times(2),
-                    end = Dimension.pagePadding.times(2))
-                .shadow(elevation = Dimension.zero,
-                    shape = MaterialTheme.shapes.small),
+                .padding(
+                    start = Dimension.pagePadding.times(2),
+                    end = Dimension.pagePadding.times(2)
+                )
+                .shadow(
+                    elevation = Dimension.zero,
+                    shape = MaterialTheme.shapes.small
+                ),
             padding = PaddingValues(Dimension.pagePadding.div(2)),
             buttonColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.secondary,
