@@ -1,7 +1,7 @@
 pluginManagement {
     val redirectModule = mapOf(
         "dagger.hilt.android.plugin" to "com.google.dagger:hilt-android-gradle-plugin",
-//        "com.google.firebase.crashlytics" to "com.google.firebase:firebase-crashlytics-gradle"
+        "com.google.firebase.crashlytics" to "com.google.firebase:firebase-crashlytics-gradle"
     )
 
     resolutionStrategy {

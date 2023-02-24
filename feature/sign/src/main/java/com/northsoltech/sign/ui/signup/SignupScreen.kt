@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,6 +30,7 @@ import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
 import com.northsoltech.framework.ui.theming.BikeTheme
 import com.northsoltech.framework.ui.theming.Dimension
+import com.northsoltech.framework.utils.extensions.showToast
 import com.northsoltech.sign.R
 import com.northsoltech.sign.ui.navigation.SignDestinations
 
@@ -48,7 +50,7 @@ fun PreviewSignupScreen() {
 
 @Composable
 fun SignupRoutes(navController: NavHostController) {
-
+     val context =  LocalContext.current
     SignupScreen(
         onUserAuthentcated = {
             navController.navigate(
@@ -61,8 +63,9 @@ fun SignupRoutes(navController: NavHostController) {
 
             }
         },
-        onUserAuthentcateFailed = {
 
+        onUserAuthentcateFailed = {
+         context.showToast(it)
         })
 }
 

@@ -63,16 +63,4 @@ dependencies {
     implementation(libs.bundles.networking)
     implementation(libs.bundles.serialization)
     implementation(libs.coroutines)
-
-////    hilt
-//    implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
-//    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-//
-//    // Retrofit
-//    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-//    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization_version"
-//    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-//    implementation "com.squareup.okhttp3:logging-interceptor:$http_interceptor_version"
-
 }

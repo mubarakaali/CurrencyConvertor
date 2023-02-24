@@ -57,20 +57,4 @@ dependencies {
     implementation(libs.coroutines)
     implementation(libs.bundles.di)
     kapt(libs.bundles.di.kapt)
-
-//    implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
-//    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
-//    def core_coroutine_version = "1.6.1"
-//
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$core_coroutine_version"
-//
-//    testApi 'junit:junit:4.13.2'
-//    testApi 'com.google.truth:truth:1.1.3'
-//    androidTestApi 'androidx.test.ext:junit:1.1.3'
-//    androidTestApi 'androidx.test.espresso:espresso-core:3.4.0'
-//    androidTestApi 'com.google.truth:truth:1.1.3'
-//    androidTestApi "androidx.compose.ui:ui-test-junit4:$compose_version"
-//    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-//    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 }
-// Allow references to generated code
