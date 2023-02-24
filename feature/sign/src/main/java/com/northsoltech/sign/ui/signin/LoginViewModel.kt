@@ -7,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.northsoltech.domain.models.ApiResource
 import com.northsoltech.domain.repositories.signing.SigningRepository
 import com.northsoltech.framework.states.UiState
+import com.northsoltech.sign.ui.events.SignInTopEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,17 +20,24 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uiState = mutableStateOf<UiState>(UiState.Idle)
+    private var _topLevelEvents = MutableSharedFlow<SignInTopEvents>()
+    val topLevelEvents:SharedFlow<SignInTopEvents> = _topLevelEvents
+
+
+    fun onEventPerform(topEvents: SignInTopEvents){
+        viewModelScope.launch {
+        _topLevelEvents.emit(topEvents)
+        }
+    }
 
     fun userLogin(
         phoneNo: String,
         password: String,
-        onUserAuthentcated: () -> Unit,
-        onUserAuthentcateFailed: (error: String) -> Unit,
     ) {
         viewModelScope.launch {
             Log.d("jejeje", "userLogin: phoneNo $phoneNo,  password $password")
             if (phoneNo.isEmpty() || password.isEmpty()) {
-                onUserAuthentcateFailed("Please fill the data correctly")
+                _topLevelEvents.emit(SignInTopEvents.UserAuthenticationFailed("Please fill the data correctly"))
                 return@launch
             }
             signingRepository.signing(
@@ -42,20 +52,21 @@ class LoginViewModel @Inject constructor(
                         uiState.value = UiState.Success
                         Log.d("jejeje", "viewModel userLogin Sucess ${it.data}")
                         if (it.data.token == null) {
-                            onUserAuthentcateFailed("Something went wrong")
+                            _topLevelEvents.emit(SignInTopEvents.UserAuthenticationFailed("Something went wrong"))
                         } else {
+                            _topLevelEvents.emit(SignInTopEvents.UserAuthenticated)
 //                            userDataPreferenceManager.updateData { userPreference ->
 //                                userPreference.copy(
 //                                    token = it.data.token!!.toPreferenceToken(),
 //                                    user = it.data.user!!.toPreferenceUser()
 //                                )
 //                            }
-                            onUserAuthentcated()
+//                            onUserAuthentcated()
                         }
                     }
                     is ApiResource.Invalid -> {
                         uiState.value = UiState.Error(it.message)
-                        onUserAuthentcateFailed(it.message)
+                        _topLevelEvents.emit(SignInTopEvents.UserAuthenticationFailed(it.message))
                     }
                 }
             }

@@ -23,7 +23,7 @@ class SplashViewModel @Inject constructor(
 
     private fun goToNextScreen() {
         viewModelScope.launch {
-            delay(1000)
+            delay(2000)
             isTimeOut.value = true
         }
     }

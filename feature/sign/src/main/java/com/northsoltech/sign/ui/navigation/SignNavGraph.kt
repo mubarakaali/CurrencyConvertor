@@ -4,8 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.northsoltech.sign.ui.screens.*
-import com.northsoltech.sign.ui.signin.LoginRoutes
+import com.northsoltech.sign.ui.events.SignInTopEvents
+import com.northsoltech.sign.ui.screens.UserTypeRoutes
+import com.northsoltech.sign.ui.signin.LoginScreen
 import com.northsoltech.sign.ui.signup.SignupRoutes
 
 const val SIGN_GRAPH_ROUTE = "sign_routes"
@@ -18,7 +19,25 @@ fun NavGraphBuilder.signNavGraph(
         route = SIGN_GRAPH_ROUTE
     ){
         composable(route = SignDestinations.Login.route) {
-            LoginRoutes(navController = navController)
+            LoginScreen{
+                when(it){
+                    is SignInTopEvents.SignInEvents->{
+                        navController.navigate(
+                            route = HOME_GRAPH_ROUTE
+                        )
+                    }
+                    is SignInTopEvents.RegistrationEvents->{
+                        navController.navigate(
+                            route = SignDestinations.UserType.route
+                        )
+                    }
+                    else->{
+                        navController.navigate(
+                            route = HOME_GRAPH_ROUTE
+                        )
+                    }
+                }
+            }
         }
 
         composable(route = SignDestinations.UserType.route) {

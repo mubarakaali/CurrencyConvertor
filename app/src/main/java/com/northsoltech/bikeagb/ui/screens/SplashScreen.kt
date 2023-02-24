@@ -50,7 +50,6 @@ fun SplashScreen(
 ) {
         val timeOut =  remember { splashVieModel.isTimeOut}
 
-    Log.d("jejeje", "SplashScreen timeOut: ${timeOut.value} ")
 
     if(timeOut.value){
         Log.d("jejeje", "SplashScreen INSIDE: TRUE ")

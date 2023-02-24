@@ -1,5 +1,6 @@
 package com.northsoltech.sign.ui.signin
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,46 +25,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.CustomButton
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
 import com.northsoltech.framework.ui.theming.Dimension
+import com.northsoltech.framework.utils.extensions.showToast
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.events.SignInTopEvents
 import com.northsoltech.sign.ui.navigation.HOME_GRAPH_ROUTE
 import com.northsoltech.sign.ui.navigation.SignDestinations
+import kotlinx.coroutines.flow.collectLatest
 
-@Composable
-fun LoginRoutes(
-    navController: NavHostController,
-) {
-    LoginScreen(
-        onUserAuthentcated = {
-            navController.navigate(
-                route = HOME_GRAPH_ROUTE
-            )
-        },
-        onUserAuthentcateFailed = {
-            navController.navigate(route = HOME_GRAPH_ROUTE)
-
-        },
-        onUserSignupListener = {
-            navController.navigate(
-                route = SignDestinations.UserType.route
-            )
-        }
-    )
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
-    onUserAuthentcated: () -> Unit,
-    onUserAuthentcateFailed: (errorMessage: String) -> Unit,
-    onUserSignupListener: () -> Unit,
+    navigationTopLevelEvents:(SignInTopEvents)->Unit,
 ) {
 
+    val context = LocalContext.current
     val uiState by remember { loginViewModel.uiState }
     var phoneNo by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
@@ -74,6 +58,30 @@ fun LoginScreen(
         painterResource(id = R.drawable.ic_baseline_visibility_24)
     else
         painterResource(id = R.drawable.ic_baseline_visibility_off_24)
+
+    LaunchedEffect(key1 = Unit, block = {
+        loginViewModel.topLevelEvents.collectLatest { topEvents ->
+            Log.d("jejeje", "LoginScreen:topEvents... $topEvents ")
+            when (topEvents) {
+                is SignInTopEvents.SignInEvents -> {
+                    loginViewModel.userLogin(
+                        phoneNo = phoneNo,
+                        password = userPassword
+                    )
+                }
+                is SignInTopEvents.RegistrationEvents -> {
+                    navigationTopLevelEvents(topEvents)
+                }
+                is SignInTopEvents.UserAuthenticated -> {
+                    navigationTopLevelEvents(topEvents)
+                }
+                is SignInTopEvents.UserAuthenticationFailed -> {
+                    context.showToast(topEvents.errorMessage)
+                    navigationTopLevelEvents(topEvents)
+                }
+            }
+        }
+    })
 
     Column(
         modifier = Modifier
@@ -176,12 +184,7 @@ fun LoginScreen(
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
-                loginViewModel.userLogin(
-                    phoneNo = phoneNo,
-                    password = userPassword,
-                    onUserAuthentcated = onUserAuthentcated,
-                    onUserAuthentcateFailed = onUserAuthentcateFailed
-                )
+                loginViewModel.onEventPerform(SignInTopEvents.SignInEvents)
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {
@@ -213,7 +216,9 @@ fun LoginScreen(
             text = stringResource(id = R.string.registration),
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.h6,
-            onButtonClicked = onUserSignupListener,
+            onButtonClicked = {
+                loginViewModel.onEventPerform(SignInTopEvents.RegistrationEvents)
+            },
         )
     }
 }
