@@ -1,7 +1,8 @@
 # Welcome to ComposeNavigationModule
-
-It's an app built using the MVVM, Repository pattern and Clean Architecture with JetPack Compose for UI Presentation,that show user registration.
-
+ The ComposeNavigationModule is following MVVM , Repository pattern and Clean Architecture with SOLID design principle.To make the app flow 
+ clean and easy,I have used multi modular approach with the features that I am implementing in the app.To make the centralized dependencies
+implementation I have used version-catalog with kotlin gradle, 'libs.version.toml' file have all dependencies.The most important thing about this app 
+is that it is using Jetpack compose UI declarative framework. 
 <br/>
 
 ## Index
@@ -23,7 +24,7 @@ It's an app built using the MVVM, Repository pattern and Clean Architecture with
 ## Modules
 The app has mainly following modules
 
-### framework
+### Framework
 It will contain the general methods and classes that will need in all our feature modules and app module like theming,components,utility functions.
 
 ### Feature Modules
