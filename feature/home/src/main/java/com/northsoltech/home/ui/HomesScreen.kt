@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.framework.utils.enums.UserType
+import com.framework.R
 
 @Composable
 fun HomeRoutes(
@@ -38,7 +39,7 @@ fun HomeScreen(
             modifier = Modifier
                 .height(Dimension.xlIcon)
                 .width(Dimension.xlIcon),
-            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap) ,
+            painter = painterResource(id = R.drawable.ic_cap) ,
             contentDescription = "app_icon")
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         MediumTitleText(title = "Home Screen")

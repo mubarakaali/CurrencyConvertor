@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.northsoltech.bikeagb.R
+import com.northsoltech.app.R
 import com.northsoltech.bikeagb.ui.SplashViewModel
 import com.northsoltech.framework.components.MainTitleText
 import com.northsoltech.sign.ui.navigation.SIGN_GRAPH_ROUTE
@@ -50,7 +50,6 @@ fun SplashScreen(
 ) {
         val timeOut =  remember { splashVieModel.isTimeOut}
 
-    Log.d("jejeje", "SplashScreen timeOut: ${timeOut.value} ")
 
     if(timeOut.value){
         Log.d("jejeje", "SplashScreen INSIDE: TRUE ")

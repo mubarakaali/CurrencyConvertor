@@ -4,6 +4,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 
@@ -20,6 +21,7 @@ fun MainTitleText(title:String){
 fun MediumTitleText(title:String){
     Text(
         text = title,
+        textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h3,
         color = MaterialTheme.colors.primary,
         fontFamily = FontFamily.Serif,
