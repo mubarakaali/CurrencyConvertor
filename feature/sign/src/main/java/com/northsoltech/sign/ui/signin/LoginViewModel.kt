@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-     val signingRepository: SigningRepository,
+    private val signingRepository: SigningRepository,
 ) : ViewModel() {
 
     val uiState = mutableStateOf<UiState>(UiState.Idle)

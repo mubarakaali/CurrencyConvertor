@@ -1,4 +1,4 @@
-package com.northsoltech.sign.ui.screens
+package com.northsoltech.sign.ui.signin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,80 +7,64 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.northsoltech.framework.components.CustomButton
 import com.northsoltech.framework.components.MediumTitleText
 import com.northsoltech.framework.states.UiState
-import com.northsoltech.framework.ui.theming.BikeTheme
 import com.northsoltech.framework.ui.theming.Dimension
 import com.northsoltech.sign.R
+import com.northsoltech.sign.ui.navigation.HOME_GRAPH_ROUTE
 import com.northsoltech.sign.ui.navigation.SignDestinations
-import com.northsoltech.sign.ui.signup.SignupViewModel
-
-@Preview
-@Composable
-fun PreviewSignupScreen() {
-    BikeTheme {
-        SignupScreen(
-            onUserAuthentcated = {
-
-            },
-            onUserAuthentcateFailed = {
-
-            })
-    }
-}
 
 @Composable
-fun SignupRoutes(navController: NavHostController) {
-
-    SignupScreen(
+fun LoginRoutes(
+    navController: NavHostController,
+) {
+    LoginScreen(
         onUserAuthentcated = {
             navController.navigate(
-                SignDestinations.Signup.route,
-            ){
-                popUpTo(SignDestinations.Signup.route){
-                    inclusive = true
-                }
-
-
-            }
+                route = HOME_GRAPH_ROUTE
+            )
         },
         onUserAuthentcateFailed = {
+            navController.navigate(route = HOME_GRAPH_ROUTE)
 
-        })
+        },
+        onUserSignupListener = {
+            navController.navigate(
+                route = SignDestinations.UserType.route
+            )
+        }
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SignupScreen(
-    signupViewModel: SignupViewModel? = null,
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
     onUserAuthentcated: () -> Unit,
-    onUserAuthentcateFailed: (error: String) -> Unit,
+    onUserAuthentcateFailed: (errorMessage: String) -> Unit,
+    onUserSignupListener: () -> Unit,
 ) {
 
-    val uiState by remember { signupViewModel!!.uiState }
-    var name by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var cnicNumber by remember { mutableStateOf("") }
+    val uiState by remember { loginViewModel.uiState }
+    var phoneNo by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -103,70 +87,28 @@ fun SignupScreen(
             modifier = Modifier
                 .height(Dimension.xlIcon)
                 .width(Dimension.xlIcon),
-            painter = painterResource(id = com.northsoltech.framework.R.drawable.ic_cap),
-            contentDescription = "app_icon")
-        Spacer(modifier = Modifier.height(Dimension.pagePadding))
-        MediumTitleText(title = stringResource(R.string.registration))
-        Spacer(modifier = Modifier.height(Dimension.pagePadding.times(2)))
-
-        OutlinedTextField(
-            value = name,
-            textStyle = TextStyle(
-                color = MaterialTheme.colors.secondary
-            ),
-            onValueChange = { name = it },
-            label = { Text(text = stringResource(id = R.string.name)) },
-            leadingIcon = {
-                Icon(imageVector = Icons.Filled.Person,
-                    contentDescription = "name")
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Text
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = {
-//                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            )
+            painter = painterResource(id = R.drawable.ic_cap),
+            contentDescription = "app_icon"
         )
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
+        MediumTitleText(title = stringResource(R.string.appname))
+        Spacer(modifier = Modifier.height(Dimension.pagePadding.times(2)))
         OutlinedTextField(
-            value = phoneNumber,
+            value = phoneNo,
             textStyle = TextStyle(
                 color = MaterialTheme.colors.secondary
             ),
-            onValueChange = { phoneNumber = it },
             label = { Text(text = stringResource(id = R.string.phone_number)) },
+            onValueChange = { phoneNo = it },
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.Call,
-                    contentDescription = "call")
+                Icon(
+                    imageVector = Icons.Filled.Person,
+                    contentDescription = "phoneNo"
+                )
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Phone
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = {
-//                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            )
-        )
-        Spacer(modifier = Modifier.height(Dimension.pagePadding))
-        OutlinedTextField(
-            value = cnicNumber,
-            textStyle = TextStyle(
-                color = MaterialTheme.colors.secondary
-            ),
-            onValueChange = { cnicNumber = it },
-            label = { Text(text = stringResource(id = R.string.cnic)) },
-            leadingIcon = {
-                Icon(imageVector = Icons.Filled.ShoppingCart,
-                    contentDescription = "call")
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Number
             ),
             keyboardActions = KeyboardActions(
                 onNext = {
@@ -182,8 +124,10 @@ fun SignupScreen(
                 color = MaterialTheme.colors.secondary
             ),
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.Lock,
-                    contentDescription = "lock")
+                Icon(
+                    imageVector = Icons.Filled.Lock,
+                    contentDescription = "lock"
+                )
             },
             onValueChange = { userPassword = it },
             label = { Text(text = "Password") },
@@ -193,6 +137,9 @@ fun SignupScreen(
             ),
             keyboardActions = KeyboardActions(
                 onSend = {
+//                    viewModel.loginUser(email.text,
+//                        getActivity.getString(R.string.jwt_token)
+//                    )
                     keyboardController?.hide()
                 }
             ),
@@ -200,8 +147,10 @@ fun SignupScreen(
                 IconButton(onClick = {
                     isVisible = !isVisible
                 }) {
-                    Icon(painter = icon,
-                        contentDescription = "view password")
+                    Icon(
+                        painter = icon,
+                        contentDescription = "view password"
+                    )
                 }
             },
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -211,8 +160,10 @@ fun SignupScreen(
         CustomButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = Dimension.pagePadding.times(2),
-                    end = Dimension.pagePadding.times(2))
+                .padding(
+                    start = Dimension.pagePadding.times(2),
+                    end = Dimension.pagePadding.times(2)
+                )
                 .shadow(
                     elevation = if (uiState !is UiState.Loading) Dimension.elevation else Dimension.zero,
                     shape = MaterialTheme.shapes.large,
@@ -221,19 +172,16 @@ fun SignupScreen(
             padding = PaddingValues(Dimension.pagePadding.div(2)),
             buttonColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary,
-            text = stringResource(id = R.string.signup),
+            text = stringResource(id = com.northsoltech.sign.R.string.login),
             enabled = uiState !is UiState.Loading,
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
-                onUserAuthentcated.invoke()
-//                signupViewModel?.onSignUp(
-//                    name = name,
-//                    phoneNo = phoneNumber,
-//                    cnicNumber = cnicNumber,
-//                    password = userPassword,
-//                    onUserAuthenticated = onUserAuthentcated,
-//                    onUserAuthenticateFailed = onUserAuthentcateFailed
-//                )
+                loginViewModel.userLogin(
+                    phoneNo = phoneNo,
+                    password = userPassword,
+                    onUserAuthentcated = onUserAuthentcated,
+                    onUserAuthentcateFailed = onUserAuthentcateFailed
+                )
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {
@@ -246,6 +194,26 @@ fun SignupScreen(
                     )
                 }
             }
+        )
+        Spacer(modifier = Modifier.height(Dimension.pagePadding))
+        CustomButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = Dimension.pagePadding.times(2),
+                    end = Dimension.pagePadding.times(2)
+                )
+                .shadow(
+                    elevation = Dimension.zero,
+                    shape = MaterialTheme.shapes.small
+                ),
+            padding = PaddingValues(Dimension.pagePadding.div(2)),
+            buttonColor = MaterialTheme.colors.background,
+            contentColor = MaterialTheme.colors.secondary,
+            text = stringResource(id = R.string.registration),
+            enabled = uiState !is UiState.Loading,
+            textStyle = MaterialTheme.typography.h6,
+            onButtonClicked = onUserSignupListener,
         )
     }
 }

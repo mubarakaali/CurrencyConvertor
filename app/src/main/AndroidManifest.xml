@@ -20,7 +20,7 @@
         android:theme="@style/Theme.BikeaGb"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.northsoltech.bikeagb.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.BikeaGb" >

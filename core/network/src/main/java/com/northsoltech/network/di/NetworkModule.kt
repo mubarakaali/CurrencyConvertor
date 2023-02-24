@@ -1,9 +1,9 @@
 package com.northsoltech.network.di
 
 import android.content.Context
+import com.core.network.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.northsoltech.network.utils.ApiConstants.BASE_URL
-import com.northsoltech.network.BuildConfig
 import com.northsoltech.network.ApiServices
 import com.northsoltech.network.NetworkCacheInterceptor
 import com.northsoltech.network.utils.NetWorkConnectionInterceptor

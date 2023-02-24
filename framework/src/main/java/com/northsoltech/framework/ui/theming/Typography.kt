@@ -7,15 +7,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.northsoltech.framework.R as FrameworkR
+import com.framework.R
 
 val font = FontFamily(
-    Font(resId = FrameworkR.font.poppins_light, weight = FontWeight.ExtraLight, style = FontStyle.Normal),
-    Font(resId = FrameworkR.font.poppins_black, weight = FontWeight.Black, style = FontStyle.Normal),
-    Font(resId = FrameworkR.font.poppins_regular, weight = FontWeight.Normal, style = FontStyle.Normal),
-    Font(resId = FrameworkR.font.poppin_medium, weight = FontWeight.Medium, style = FontStyle.Normal),
-    Font(resId = FrameworkR.font.poppins_bold, weight = FontWeight.SemiBold, style = FontStyle.Normal),
-    Font(resId = FrameworkR.font.poppins_extra_bold, weight = FontWeight.Bold, style = FontStyle.Normal),
+    Font(resId = R.font.poppins_light, weight = FontWeight.ExtraLight, style = FontStyle.Normal),
+    Font(resId = R.font.poppins_black, weight = FontWeight.Black, style = FontStyle.Normal),
+    Font(resId = R.font.poppins_regular, weight = FontWeight.Normal, style = FontStyle.Normal),
+    Font(resId = R.font.poppin_medium, weight = FontWeight.Medium, style = FontStyle.Normal),
+    Font(resId = R.font.poppins_bold, weight = FontWeight.SemiBold, style = FontStyle.Normal),
+    Font(resId = R.font.poppins_extra_bold, weight = FontWeight.Bold, style = FontStyle.Normal),
 )
 
 // Set of Material typography styles to start with

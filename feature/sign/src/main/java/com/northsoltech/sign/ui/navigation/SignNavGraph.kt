@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.northsoltech.sign.ui.screens.*
+import com.northsoltech.sign.ui.signin.LoginRoutes
+import com.northsoltech.sign.ui.signup.SignupRoutes
 
 const val SIGN_GRAPH_ROUTE = "sign_routes"
 internal const val HOME_GRAPH_ROUTE = "home_routes"
