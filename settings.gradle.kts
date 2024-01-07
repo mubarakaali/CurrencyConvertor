@@ -26,12 +26,11 @@ dependencyResolutionManagement {
         maven(url = "https://www.jitpack.io")
     }
 }
-rootProject.name = "ComposeNavigationWithMultiModule"
+rootProject.name = "CurrencyConvertor"
 include(":app")
 include(":framework")
 include(":core")
 include(":core:domain")
 include(":core:network")
 include(":feature")
-include(":feature:sign")
 include(":feature:home")

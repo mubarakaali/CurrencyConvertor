@@ -9,11 +9,11 @@ kapt {
 }
 
 android {
-    namespace = "com.northsoltech.app"
+    namespace = "com.rates.app"
     compileSdk = libs.versions.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.northsoltech.bikeagb"
+        applicationId = "com.rates.currency"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.sdk.get().toInt()
         versionCode  = 1
@@ -60,7 +60,6 @@ android {
 
 dependencies {
     implementation(project(":framework"))
-    implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":core:network"))
 
